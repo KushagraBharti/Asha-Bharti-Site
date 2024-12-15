@@ -10,8 +10,7 @@ import Coaching from './pages/Coaching';
 import Books from './pages/Books';
 import Blog from './pages/Blog';
 import Workshops from './pages/Workshops';
-import SchedulingAndContact from './pages/Scheduling';
-import Contact from './pages/Contact';
+import SchedulingAndContact from './pages/ScheduleContact';
 
 const App: React.FC = () => {
   return (
@@ -25,8 +24,7 @@ const App: React.FC = () => {
           <Route path="/books" element={<Books />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/workshops" element={<Workshops />} />
-          <Route path="/scheduling" element={<SchedulingAndContact />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/schedule-and-contact" element={<SchedulingAndContact />} />
         </Routes>
       </div>
       <Footer />

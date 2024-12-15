@@ -19,8 +19,7 @@ const Navbar: React.FC = () => {
           <Link to="/books" className="text-neutral-dark hover:text-primary transition-colors">My Books</Link>
           <Link to="/blog" className="text-neutral-dark hover:text-primary transition-colors">My Blog</Link>
           <Link to="/workshops" className="text-neutral-dark hover:text-primary transition-colors">Workshops</Link>
-          <Link to="/scheduling" className="text-neutral-dark hover:text-primary transition-colors">Schedule a Call</Link>
-          <Link to="/contact" className="text-neutral-dark hover:text-primary transition-colors">Contact</Link>
+          <Link to="/schedule-and-contact" className="text-neutral-dark hover:text-primary transition-colors">Reach Us</Link>
         </div>
         {/* Add a button or menu icon for mobile view later */}
       </nav>
