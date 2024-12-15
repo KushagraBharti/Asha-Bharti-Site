@@ -1,16 +1,8 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #fafafa;
-  color: #333;
-}
+/* frontend/src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+/* Global resets or custom classes can go here, if needed. */
 
-main {
-  flex: 1;
-}
+/* Example: Set a global body style using Tailwind classes through a parent component instead of here. */
