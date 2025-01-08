@@ -10,17 +10,45 @@ import workshopRoutes from './routes/workshopRoutes';
 
 const app = express();
 
-app.use(cors({
-  origin: '*' // For now, allow all origins. Adjust later as needed.
-}));
 
-// Parse JSON bodies
+const allowedOrigins = [
+  'http://localhost:5173', // Local frontend
+  'https://asha-bharti-site-frontend.vercel.app/', // Deployed frontend URL
+  'https://asha-bharti-site-frontend-kushagras-projects-5d330ca5.vercel.app/', // Alternative frontend
+  'https://asha-bharti-site-frontend-git-main-kushagras-projects-5d330ca5.vercel.app/', // Branch frontend
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.error(`CORS error: Origin ${origin} not allowed`);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+  })
+);
+
+/*
+app.use(
+  cors({
+    origin: '*',
+  })
+);
+*/
+
 app.use(express.json());
 
-// Health check route
-app.get('/', (req, res) => {
-  res.send('Asha Bharti Backend is running!');
+/*
+app.use((req, res, next) => {
+  console.log(`Request Origin: ${req.headers.origin}`);
+  console.log(`Request Path: ${req.path}`);
+  console.log(`Request Method: ${req.method}`);
+  next();
 });
+*/
 
 // API routes
 app.use('/api', testimonialRoutes);
@@ -28,5 +56,9 @@ app.use('/api', coachingRoutes);
 app.use('/api', blogRoutes);
 app.use('/api', bookRoutes);
 app.use('/api', workshopRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Backend server is running!');
+});
 
 export default app;
