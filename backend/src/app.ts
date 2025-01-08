@@ -13,9 +13,9 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173', // Local frontend
-  'https://asha-bharti-site-frontend.vercel.app/', // Deployed frontend URL
-  'https://asha-bharti-site-frontend-kushagras-projects-5d330ca5.vercel.app/', // Alternative frontend
-  'https://asha-bharti-site-frontend-git-main-kushagras-projects-5d330ca5.vercel.app/', // Branch frontend
+  'https://asha-bharti-site-frontend.vercel.app', // Deployed frontend URL
+  'https://asha-bharti-site-frontend-kushagras-projects-5d330ca5.vercel.app', // Alternative frontend
+  'https://asha-bharti-site-frontend-git-main-kushagras-projects-5d330ca5.vercel.app', // Branch frontend
 ];
 
 app.use(
