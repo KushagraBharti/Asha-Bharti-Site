@@ -40,19 +40,21 @@ const Books: React.FC = () => {
     <main className="space-y-16">
       {/* Introduction / Author's Note */}
       <section className="relative bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-          <h1 className="text-3xl md:text-4xl font-bold text-primary mb-6">My Books</h1>
-          <p className="text-neutral leading-relaxed max-w-3xl">
-            Writing has been a powerful way for me to share insights, tell stories, and 
-            illuminate paths toward personal growth. Each of my books is inspired by 
-            the real-life transformations I’ve witnessed, the challenges clients have 
-            faced, and the innate resilience I believe we all possess.
-          </p>
-          <p className="text-neutral leading-relaxed max-w-3xl mt-4">
-            Whether you’re seeking a deep dive into self-discovery or practical tools to 
-            enhance your day-to-day life, I hope these books offer inspiration, guidance, 
-            and encouragement on your journey.
-          </p>
+        <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+          <div className="flex flex-col items-center">
+            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-6 text-center">My Books</h1>
+            <p className="text-neutral leading-relaxed text-center">
+              Writing has been a powerful way for me to share insights, tell stories, and 
+              illuminate paths toward personal growth. Each of my books is inspired by 
+              the real-life transformations I've witnessed, the challenges clients have 
+              faced, and the innate resilience I believe we all possess.
+            </p>
+            <p className="text-neutral leading-relaxed text-center mt-4">
+              Whether you're seeking a deep dive into self-discovery or practical tools to 
+              enhance your day-to-day life, I hope these books offer inspiration, guidance, 
+              and encouragement on your journey.
+            </p>
+          </div>
         </div>
       </section>
 

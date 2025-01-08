@@ -3,9 +3,9 @@ import axios from "axios";
 
 interface BlogPost {
   title: string;
-  description: string;
-  imageUrl: string;
-  link: string;
+  excerpt: string;
+  image: string;
+  externalLink: string;
 }
 
 const Blog: React.FC = () => {
@@ -73,19 +73,26 @@ const Blog: React.FC = () => {
                   key={index}
                   className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow"
                 >
-                  {post.imageUrl && (
-                    <div className="aspect-w-16 aspect-h-9 mb-4">
-                      <img
-                        src={post.imageUrl}
-                        alt={post.title}
-                        className="w-full h-48 object-cover rounded shadow-md"
-                      />
-                    </div>
-                  )}
+                  <div className="aspect-w-16 aspect-h-9 mb-4">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-48 object-cover rounded shadow-md"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = 'https://via.placeholder.com/400x200?text=Blog+Post';
+                      }}
+                    />
+                  </div>
                   <h3 className="text-xl font-semibold text-primary mb-2">{post.title}</h3>
-                  <p className="text-sm text-neutral mb-4">{post.description}</p>
+                  <p className="text-sm text-neutral mb-4">{post.excerpt}</p>
                   <button
-                    onClick={() => window.open(post.link, '_blank')}
+                    onClick={() => {
+                      const url = post.externalLink;
+                      if (url) {
+                        window.open(url, '_blank', 'noopener,noreferrer');
+                      }
+                    }}
                     className="bg-primary text-white px-4 py-2 rounded font-medium hover:bg-primary-dark transition-colors cursor-pointer"
                   >
                     Read More

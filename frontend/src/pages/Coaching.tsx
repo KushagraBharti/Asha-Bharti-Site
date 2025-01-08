@@ -42,17 +42,19 @@ const Coaching: React.FC = () => {
     <main className="space-y-16">
       {/* Introduction / Overview Section */}
       <section className="relative bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-          <h1 className="text-3xl md:text-4xl font-bold text-primary mb-6">
-            Coaching Services Tailored to You
-          </h1>
-          <p className="text-neutral leading-relaxed max-w-3xl">
-            My coaching practice is designed to empower you with the clarity, tools, 
-            and confidence you need to overcome challenges, set meaningful goals, 
-            and create lasting change. Whether you’re looking to advance your career, 
-            improve work-life balance, or cultivate greater self-awareness, I’m here 
-            to guide you every step of the way.
-          </p>
+        <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+          <div className="flex flex-col items-center">
+            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-6 text-center">
+              Coaching Services Tailored to You
+            </h1>
+            <p className="text-neutral leading-relaxed text-center">
+              My coaching practice is designed to empower you with the clarity, tools, 
+              and confidence you need to overcome challenges, set meaningful goals, 
+              and create lasting change. Whether you're looking to advance your career, 
+              improve work-life balance, or cultivate greater self-awareness, I'm here 
+              to guide you every step of the way.
+            </p>
+          </div>
         </div>
       </section>
 
