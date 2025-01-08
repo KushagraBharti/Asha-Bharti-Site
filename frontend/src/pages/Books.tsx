@@ -132,30 +132,6 @@ const Books: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Final CTA Section - Newsletter Sign-up or Preview */}
-      <section className="bg-primary text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="text-3xl font-bold">Get a Free Chapter Preview</h2>
-          <p className="max-w-2xl mx-auto text-neutral-light">
-            Sign up for my newsletter and receive a free chapter from one of my latest books. 
-            Stay updated on new releases, special events, and exclusive insights.
-          </p>
-          <form className="max-w-md mx-auto flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0 items-center">
-            <input 
-              type="email" 
-              placeholder="Your Email Address"
-              className="w-full md:flex-grow px-4 py-2 rounded-md text-neutral-dark border border-neutral-light focus:outline-none focus:border-primary"
-            />
-            <button 
-              type="submit"
-              className="bg-white text-primary px-6 py-2 rounded-md font-medium hover:bg-primary-light transition-colors"
-            >
-              Get Free Chapter
-            </button>
-          </form>
-        </div>
-      </section>
     </main>
   );
 };

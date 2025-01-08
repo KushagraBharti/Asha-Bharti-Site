@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
             <h3 className="text-lg text-center font-semibold mb-4">Follow Us</h3>
             <div className="flex justify-center space-x-6">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/asha.bhx"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-light hover:text-white transition-colors"
@@ -66,13 +66,13 @@ const Footer: React.FC = () => {
                 <i className="fab fa-facebook text-2xl"></i>
               </a>
               <a
-                href="mailto:asha@example.com"
+                href="mailto:empoweringcoach.asha@gmail.com"
                 className="text-neutral-light hover:text-white transition-colors"
               >
                 <i className="fas fa-envelope text-2xl"></i>
               </a>
               <a
-                href="https://medium.com"
+                href="https://ashabharti.medium.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-light hover:text-white transition-colors"
@@ -80,7 +80,7 @@ const Footer: React.FC = () => {
                 <i className="fab fa-medium text-2xl"></i>
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/asha-bharti-2a595112/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-light hover:text-white transition-colors"
@@ -88,7 +88,7 @@ const Footer: React.FC = () => {
                 <i className="fab fa-linkedin text-2xl"></i>
               </a>
               <a
-              href="https://wa.me/yourphonenumber"
+              href="https://wa.me/918448903808"
               target="_blank"
               rel="noopener noreferrer"
               className="text-neutral-light hover:text-white transition-colors"
@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
           {/* Contact Information */}
           <div>
             <p className="text-sm text-center">Phone: +966 53 091 7452</p>
-            <p className="text-sm text-center">Email: ashabharti@gmail.com</p>
+            <p className="text-sm text-center">Email: empoweringcoach.asha@gmail.com</p>
           </div>
         </div>
       </div>
