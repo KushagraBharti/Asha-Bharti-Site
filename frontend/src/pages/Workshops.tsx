@@ -1,83 +1,105 @@
-// frontend/src/pages/Workshops.tsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import Testimonial from "../components/Testimonials";
 
-const Workshops: React.FC = () => (
-  <main className="space-y-16">
+interface WorkshopData {
+  title: string;
+  date: string; // e.g., "March 15, 2025"
+  format: string; // e.g., "Online Webinar" or "In-Person"
+  description: string;
+  registerLink: string;
+}
 
-    {/* Introduction / Upcoming Events */}
-    <section className="relative bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-primary mb-6">Workshops & Seminars</h1>
-        <p className="text-neutral leading-relaxed max-w-3xl mx-auto">
-          Join me for interactive workshops, insightful seminars, and transformative 
-          events designed to empower you with practical tools and strategies. Whether 
-          you’re looking to boost your career, improve personal well-being, or 
-          enhance leadership skills, these sessions provide an immersive, hands-on 
-          learning experience.
-        </p>
-      </div>
-    </section>
+const Workshops: React.FC = () => {
+  const [workshops, setWorkshops] = useState<WorkshopData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-    {/* Upcoming Events */}
-    <section className="bg-neutral-light py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl font-bold text-center mb-8 text-primary">Upcoming Events</h2>
-        <div className="grid gap-8 md:grid-cols-3">
-          
-          {/* Workshop 1 */}
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-            <h3 className="text-xl font-semibold text-primary mb-2">Finding Your True North</h3>
-            <p className="text-sm text-neutral mb-3">
-              Date: March 15, 2025 • Format: Online Webinar<br/>
-              Discover your core values, define your purpose, and align your actions 
-              with what matters most.
-            </p>
-            <Link 
-              to="/scheduling" 
-              className="bg-primary text-white px-4 py-2 rounded font-medium hover:bg-primary-dark transition-colors inline-block"
-            >
-              Register Now
-            </Link>
-          </div>
+  useEffect(() => {
+    const fetchWorkshops = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL.replace(/\/$/, "");
+        const response = await axios.get(`${apiBaseUrl}/api/workshops`);
+        if (Array.isArray(response.data)) {
+          setWorkshops(response.data);
+        } else {
+          throw new Error("Invalid data format received from API");
+        }
+      } catch (err) {
+        console.error("Error fetching workshops:", err);
+        setError("Failed to load workshops. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-          {/* Workshop 2 */}
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-            <h3 className="text-xl font-semibold text-primary mb-2">Stress to Serenity</h3>
-            <p className="text-sm text-neutral mb-3">
-              Date: April 10, 2025 • Format: In-Person (NYC)<br/>
-              Learn mindfulness techniques, breathwork, and practical tools to 
-              reduce stress and increase resilience.
-            </p>
-            <Link 
-              to="/scheduling" 
-              className="bg-primary text-white px-4 py-2 rounded font-medium hover:bg-primary-dark transition-colors inline-block"
-            >
-              Register Now
-            </Link>
-          </div>
+    fetchWorkshops();
+  }, []);
 
-          {/* Workshop 3 */}
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-            <h3 className="text-xl font-semibold text-primary mb-2">Career Confidence Booster</h3>
-            <p className="text-sm text-neutral mb-3">
-              Date: May 20, 2025 • Format: Online Masterclass<br/>
-              Gain clarity on your career goals, enhance your personal brand, 
-              and cultivate the confidence to excel in your field.
-            </p>
-            <Link 
-              to="/scheduling" 
-              className="bg-primary text-white px-4 py-2 rounded font-medium hover:bg-primary-dark transition-colors inline-block"
-            >
-              Register Now
-            </Link>
-          </div>
-
+  return (
+    <main className="space-y-16">
+      {/* Introduction / Upcoming Events */}
+      <section className="relative bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-primary mb-6">
+            Workshops & Seminars
+          </h1>
+          <p className="text-neutral leading-relaxed max-w-3xl mx-auto">
+            Join me for interactive workshops, insightful seminars, and transformative 
+            events designed to empower you with practical tools and strategies. Whether 
+            you’re looking to boost your career, improve personal well-being, or 
+            enhance leadership skills, these sessions provide an immersive, hands-on 
+            learning experience.
+          </p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    {/* Past Events & Highlights */}
+      {/* Upcoming Events */}
+      <section className="bg-neutral-light py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-center mb-8 text-primary">Upcoming Events</h2>
+
+          {/* Loading State */}
+          {loading && <p className="text-center text-neutral">Loading workshops...</p>}
+
+          {/* Error State */}
+          {error && <p className="text-center text-red-500">{error}</p>}
+
+          {!loading && !error && workshops.length > 0 && (
+            <div className="grid gap-8 md:grid-cols-3">
+              {workshops.map((workshop, index) => (
+                <div
+                  key={index}
+                  className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow"
+                >
+                  <h3 className="text-xl font-semibold text-primary mb-2">{workshop.title}</h3>
+                  <p className="text-sm text-neutral mb-3">
+                    Date: {workshop.date} • Format: {workshop.format}
+                    <br />
+                    {workshop.description}
+                  </p>
+                  <Link
+                    to={workshop.registerLink}
+                    className="bg-primary text-white px-4 py-2 rounded font-medium hover:bg-primary-dark transition-colors inline-block"
+                  >
+                    Register Now
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* No Data Fallback */}
+          {!loading && !error && workshops.length === 0 && (
+            <p className="text-center text-neutral">No workshops available at the moment.</p>
+          )}
+        </div>
+      </section>
+
+      {/* Past Events & Highlights */}
     <section className="py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold text-primary text-center mb-8">Past Highlights</h2>
@@ -115,31 +137,10 @@ const Workshops: React.FC = () => (
     </section>
 
     {/* Testimonials from Past Participants */}
-    <section className="bg-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl font-bold text-primary text-center mb-8">What Participants Are Saying</h2>
-        <div className="grid gap-8 md:grid-cols-3">
-          <blockquote className="bg-neutral-light p-6 rounded-lg">
-            <p className="text-neutral italic">
-              “Asha’s Stress to Serenity workshop taught me practical tools that I still use daily.”
-            </p>
-            <footer className="mt-4 text-sm font-medium text-neutral-dark">— Participant A</footer>
-          </blockquote>
-          <blockquote className="bg-neutral-light p-6 rounded-lg">
-            <p className="text-neutral italic">
-              “I left the retreat feeling grounded, re-energized, and inspired.”
-            </p>
-            <footer className="mt-4 text-sm font-medium text-neutral-dark">— Participant B</footer>
-          </blockquote>
-          <blockquote className="bg-neutral-light p-6 rounded-lg">
-            <p className="text-neutral italic">
-              “The Career Confidence Booster session gave me the clarity and push I needed to pivot successfully.”
-            </p>
-            <footer className="mt-4 text-sm font-medium text-neutral-dark">— Participant C</footer>
-          </blockquote>
-        </div>
-      </div>
-    </section>
+    <Testimonial
+      title="What Participants Are Saying"
+      apiEndpoint="/api/testimonials/workshops"
+    />
 
     {/* FAQs */}
     <section className="py-12 bg-neutral-light">
@@ -194,8 +195,8 @@ const Workshops: React.FC = () => (
         </form>
       </div>
     </section>
-
-  </main>
-);
+    </main>
+  );
+};
 
 export default Workshops;

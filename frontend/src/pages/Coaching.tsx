@@ -1,11 +1,45 @@
-// frontend/src/pages/Coaching.tsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import Testimonial from "../components/Testimonials";
+
+interface CoachingServiceData {
+  title: string;
+  summary: string;
+  features: string[];
+  link?: string;
+}
 
 const Coaching: React.FC = () => {
+  const [coachingServices, setCoachingServices] = useState<CoachingServiceData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCoachingServices = async () => {
+      try {
+        setLoading(true);
+        setError(null); // Clear previous errors
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL.replace(/\/$/, "");
+        const response = await axios.get(`${apiBaseUrl}/api/coaching-services`);
+        if (Array.isArray(response.data)) {
+          setCoachingServices(response.data);
+        } else {
+          throw new Error("Invalid data format received from API");
+        }
+      } catch (err) {
+        console.error("Error fetching coaching services:", err);
+        setError("Failed to load coaching services. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCoachingServices();
+  }, []);
+
   return (
     <main className="space-y-16">
-
       {/* Introduction / Overview Section */}
       <section className="relative bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
@@ -26,57 +60,41 @@ const Coaching: React.FC = () => {
       <section className="bg-neutral-light py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-center mb-8 text-primary">Coaching Packages</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            
-            {/* One-on-One Coaching */}
-            <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-semibold text-primary mb-2">One-on-One Coaching</h3>
-              <p className="text-sm text-neutral mb-3">
-                Personalized, private sessions focused on your unique goals and challenges.
-              </p>
-              <ul className="list-disc list-inside text-sm text-neutral space-y-1 mb-4">
-                <li>Weekly 60-minute sessions</li>
-                <li>Customized action plans</li>
-                <li>Email support between sessions</li>
-              </ul>
-              <Link to="/scheduling" className="text-primary font-medium underline inline-block">
-                Learn More
-              </Link>
-            </div>
 
-            {/* Career Transition Coaching */}
-            <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-semibold text-primary mb-2">Career Transition Coaching</h3>
-              <p className="text-sm text-neutral mb-3">
-                Guidance to help you navigate career changes, find new opportunities, and achieve fulfillment.
-              </p>
-              <ul className="list-disc list-inside text-sm text-neutral space-y-1 mb-4">
-                <li>Clarity on career direction</li>
-                <li>Resume and interview prep</li>
-                <li>Networking and personal branding</li>
-              </ul>
-              <Link to="/scheduling" className="text-primary font-medium underline inline-block">
-                Learn More
-              </Link>
-            </div>
+          {/* Loading State */}
+          {loading && <p className="text-center text-neutral">Loading coaching services...</p>}
 
-            {/* Stress Management & Well-Being */}
-            <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-semibold text-primary mb-2">Stress Management & Well-Being</h3>
-              <p className="text-sm text-neutral mb-3">
-                Techniques to reduce anxiety, build resilience, and cultivate a balanced lifestyle.
-              </p>
-              <ul className="list-disc list-inside text-sm text-neutral space-y-1 mb-4">
-                <li>Mindfulness-based practices</li>
-                <li>Work-life harmony strategies</li>
-                <li>Customized stress reduction plan</li>
-              </ul>
-              <Link to="/scheduling" className="text-primary font-medium underline inline-block">
-                Learn More
-              </Link>
-            </div>
+          {/* Error State */}
+          {error && <p className="text-center text-red-500">{error}</p>}
 
-          </div>
+          {!loading && !error && coachingServices.length > 0 && (
+            <div className="grid gap-8 md:grid-cols-3">
+              {coachingServices.map((service, index) => (
+                <div
+                  key={index}
+                  className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow"
+                >
+                  <h3 className="text-xl font-semibold text-primary mb-2">{service.title}</h3>
+                  <p className="text-sm text-neutral mb-3">{service.summary}</p>
+                  <ul className="list-disc list-inside text-sm text-neutral space-y-1 mb-4">
+                    {service.features.map((feature, i) => (
+                      <li key={i}>{feature}</li>
+                    ))}
+                  </ul>
+                  {service.link && (
+                    <Link to={service.link} className="text-primary font-medium underline inline-block">
+                      Learn More
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* No Data Fallback */}
+          {!loading && !error && coachingServices.length === 0 && (
+            <p className="text-center text-neutral">No coaching services available at the moment.</p>
+          )}
         </div>
       </section>
 
@@ -105,31 +123,10 @@ const Coaching: React.FC = () => {
       </section>
 
       {/* Testimonials / Case Studies */}
-      <section className="bg-neutral-light py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-primary text-center mb-8">Client Success Stories</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            <blockquote className="bg-white p-6 rounded-lg shadow">
-              <p className="text-neutral italic">
-                “Working with Asha revolutionized my approach to career planning. I landed a new job and feel more aligned than ever.”
-              </p>
-              <footer className="mt-4 text-sm font-medium text-neutral-dark">— Client G</footer>
-            </blockquote>
-            <blockquote className="bg-white p-6 rounded-lg shadow">
-              <p className="text-neutral italic">
-                “I’ve learned how to set boundaries and manage stress in a way that supports my well-being.”
-              </p>
-              <footer className="mt-4 text-sm font-medium text-neutral-dark">— Client H</footer>
-            </blockquote>
-            <blockquote className="bg-white p-6 rounded-lg shadow">
-              <p className="text-neutral italic">
-                “Asha’s guidance helped me uncover confidence I never knew I had. I’m now pursuing my passions fearlessly.”
-              </p>
-              <footer className="mt-4 text-sm font-medium text-neutral-dark">— Client I</footer>
-            </blockquote>
-          </div>
-        </div>
-      </section>
+      <Testimonial
+      title="Client Success Stories"
+      apiEndpoint="/api/testimonials/coaching"
+    />
 
       {/* Pricing & Packages */}
       <section className="py-12">
@@ -223,7 +220,6 @@ const Coaching: React.FC = () => {
           </Link>
         </div>
       </section>
-
     </main>
   );
 };

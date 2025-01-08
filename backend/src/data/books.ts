@@ -7,7 +7,7 @@ export interface BookData {
   
   export const booksData: BookData[] = [
     {
-      title: "Embrace Your Journey",
+      title: "Embrace Yourw Journey",
       coverImage: "https://via.placeholder.com/200x300.png?text=Book+1+Cover",
       synopsis: "A guide to understanding your inner potential, overcoming fears, and walking confidently into your future.",
       purchaseLink: "https://www.amazon.com"

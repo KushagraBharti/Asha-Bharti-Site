@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Testimonial from "../components/Testimonials";
+
 
 const Home: React.FC = () => {
   return (
@@ -107,32 +109,10 @@ const Home: React.FC = () => {
       </section>
 
       {/* Testimonials Preview */}
-      <section className="bg-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-primary text-center mb-8">What Clients Are Saying</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            {/* Placeholder testimonials */}
-            <blockquote className="bg-neutral-light p-6 rounded-lg">
-              <p className="text-neutral italic">
-                “Asha helped me realize my true potential and gave me the confidence to pursue my dreams.”
-              </p>
-              <footer className="mt-4 text-sm font-medium text-neutral-dark">— Client A</footer>
-            </blockquote>
-            <blockquote className="bg-neutral-light p-6 rounded-lg">
-              <p className="text-neutral italic">
-                “Her guidance and support transformed my career path. I’m forever grateful.”
-              </p>
-              <footer className="mt-4 text-sm font-medium text-neutral-dark">— Client B</footer>
-            </blockquote>
-            <blockquote className="bg-neutral-light p-6 rounded-lg">
-              <p className="text-neutral italic">
-                “The workshops were enlightening, practical, and truly inspiring!”
-              </p>
-              <footer className="mt-4 text-sm font-medium text-neutral-dark">— Client C</footer>
-            </blockquote>
-          </div>
-        </div>
-      </section>
+      <Testimonial
+      title="What Clients Are Saying"
+      apiEndpoint="/api/testimonials/home"
+    />
 
       {/* Featured Blog Posts */}
       <section className="bg-neutral-light py-12">

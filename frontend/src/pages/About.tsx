@@ -1,5 +1,6 @@
 // frontend/src/pages/About.tsx
 import React from 'react';
+import Testimonial from "../components/Testimonials";
 
 const About: React.FC = () => {
   return (
@@ -119,31 +120,10 @@ const About: React.FC = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="bg-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-primary text-center mb-8">Words from Clients</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            <blockquote className="bg-neutral-light p-6 rounded-lg">
-              <p className="text-neutral italic">
-                “Asha’s insights helped me find the courage to make big changes in my life.”
-              </p>
-              <footer className="mt-4 text-sm font-medium text-neutral-dark">— Client D</footer>
-            </blockquote>
-            <blockquote className="bg-neutral-light p-6 rounded-lg">
-              <p className="text-neutral italic">
-                “Her methods are both gentle and powerful—exactly what I needed.”
-              </p>
-              <footer className="mt-4 text-sm font-medium text-neutral-dark">— Client E</footer>
-            </blockquote>
-            <blockquote className="bg-neutral-light p-6 rounded-lg">
-              <p className="text-neutral italic">
-                “Working with Asha was transformative. I’ve never felt so clear and confident.”
-              </p>
-              <footer className="mt-4 text-sm font-medium text-neutral-dark">— Client F</footer>
-            </blockquote>
-          </div>
-        </div>
-      </section>
+      <Testimonial
+      title="Words from Clients"
+      apiEndpoint="/api/testimonials/about"
+    />
 
     </main>
   );
