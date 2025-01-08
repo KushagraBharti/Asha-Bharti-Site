@@ -1,15 +1,16 @@
 // frontend/src/components/Navbar.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from "../assets/logo.svg";
 
 const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 bg-white bg-opacity-90 backdrop-blur-md border-b border-gray-200">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        <div className="flex-shrink-0">
-          {/* Placeholder for logo or Asha’s name as a brand */}
-          <Link to="/" className="text-primary font-bold text-xl">
-            Asha Bharti
+      <div className="flex-shrink-0">
+          {/* Logo */}
+          <Link to="/">
+            <img src={Logo} alt="Asha Bharti Logo" className="h-18 w-auto" />
           </Link>
         </div>
         <div className="hidden md:flex space-x-8 text-sm font-medium">

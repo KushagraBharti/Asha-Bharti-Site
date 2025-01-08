@@ -5,6 +5,9 @@ export default {
   ],
   theme: {
     extend: {
+      spacing: {
+        '18': '4.5rem', // 72px (adjust as needed)
+      },
       colors: {
         primary: {
           DEFAULT: '#4F8A72',

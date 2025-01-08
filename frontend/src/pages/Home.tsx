@@ -1,9 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from 'react-router-dom';
 import Testimonial from "../components/Testimonials";
 
+interface BlogPost {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  link: string;
+}
 
 const Home: React.FC = () => {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      try {
+        setLoading(true);
+        setError(null); // Clear previous errors
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL.replace(/\/$/, "");
+        const response = await axios.get(`${apiBaseUrl}/api/blogs`);
+        if (Array.isArray(response.data)) {
+          setBlogPosts(response.data);
+        } else {
+          throw new Error("Invalid data format received from API");
+        }
+      } catch (err) {
+        console.error("Error fetching blog posts:", err);
+        setError("Failed to load blog posts. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogPosts();
+  }, []);
+
   return (
     <main className="space-y-16">
 
@@ -114,86 +149,64 @@ const Home: React.FC = () => {
       apiEndpoint="/api/testimonials/home"
     />
 
-      {/* Featured Blog Posts */}
+      {/* Recent Posts Preview */}
       <section className="bg-neutral-light py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-primary text-center mb-8">From the Blog</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            {/* Placeholder blog cards */}
-            <article className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-              <img 
-                src="https://via.placeholder.com/400x200.png?text=Blog+Post+1" 
-                alt="Blog Post 1" 
-                className="mb-4 w-full h-auto rounded"
-              />
-              <h3 className="font-semibold text-primary mb-2">Finding Inner Peace in a Busy World</h3>
-              <p className="text-sm text-neutral mb-3">
-                Simple techniques to stay grounded and focused amidst life’s distractions.
-              </p>
-              <a 
-                href="https://medium.com/some-external-blog" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-primary font-medium underline"
-              >
-                Read More
-              </a>
-            </article>
-            <article className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-              <img 
-                src="https://via.placeholder.com/400x200.png?text=Blog+Post+2" 
-                alt="Blog Post 2" 
-                className="mb-4 w-full h-auto rounded"
-              />
-              <h3 className="font-semibold text-primary mb-2">Overcoming Imposter Syndrome</h3>
-              <p className="text-sm text-neutral mb-3">
-                Strategies to recognize and combat the self-doubt that holds you back.
-              </p>
-              <a 
-                href="https://medium.com/some-external-blog" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-primary font-medium underline"
-              >
-                Read More
-              </a>
-            </article>
-            <article className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-              <img 
-                src="https://via.placeholder.com/400x200.png?text=Blog+Post+3" 
-                alt="Blog Post 3" 
-                className="mb-4 w-full h-auto rounded"
-              />
-              <h3 className="font-semibold text-primary mb-2">Setting Clear Goals for Growth</h3>
-              <p className="text-sm text-neutral mb-3">
-                Learn how to define and pursue goals that truly align with your values.
-              </p>
-              <a 
-                href="https://medium.com/some-external-blog" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-primary font-medium underline"
-              >
-                Read More
-              </a>
-            </article>
-          </div>
-        </div>
-      </section>
+          <h2 className="text-2xl font-bold text-center mb-8 text-primary">Featured Posts</h2>
 
-      {/* Final CTA Section */}
-      <section className="bg-primary text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="text-3xl font-bold">Ready to Begin Your Journey?</h2>
-          <p className="max-w-2xl mx-auto text-neutral-light">
-            Take the first step towards embracing your potential. Schedule a discovery call today.
-          </p>
-          <Link 
-            to="/scheduling" 
-            className="inline-block bg-white text-primary px-6 py-3 rounded-md font-medium hover:bg-primary-light transition-colors"
-          >
-            Book a Discovery Call
-          </Link>
+          {/* Handle loading state */}
+          {loading && (
+            <p className="text-center text-neutral">Loading blog posts...</p>
+          )}
+
+          {/* Handle error state */}
+          {error && (
+            <p className="text-center text-red-500">{error}</p>
+          )}
+
+          {!loading && !error && blogPosts.length > 0 && (
+            <div className="grid gap-8 md:grid-cols-3">
+              {blogPosts.map((post) => (
+                <article
+                  key={post.id}
+                  className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow"
+                >
+                  <img
+                    src={post.imageUrl}
+                    alt={post.title}
+                    className="mb-4 w-full h-auto rounded"
+                  />
+                  <h3 className="font-semibold text-primary mb-2">{post.title}</h3>
+                  <p className="text-sm text-neutral mb-3">{post.description}</p>
+                  <a
+                    href={post.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary font-medium underline"
+                  >
+                    Read More
+                  </a>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {/* Fallback when no blog posts are available */}
+          {!loading && !error && blogPosts.length === 0 && (
+            <p className="text-center text-neutral">No blog posts available at the moment.</p>
+          )}
+
+          {/* Read More Button */}
+          <div className="text-center mt-12">
+            <a
+              href="https://medium.com/some-external-blog"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary-dark transition-colors"
+            >
+              Read More on Medium
+            </a>
+          </div>
         </div>
       </section>
 

@@ -12,6 +12,8 @@ import Blog from './pages/Blog';
 import Workshops from './pages/Workshops';
 import SchedulingAndContact from './pages/ScheduleContact';
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-neutral-light text-neutral-dark font-sans">
